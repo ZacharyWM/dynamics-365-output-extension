@@ -13,10 +13,10 @@ codeunit 50100 "Print Health Check"
         // Send the generated document stream to PrinterCloud after each print.
         if SendPrintJob(DocumentStream) then begin
             Success := true;
-            Message('Sent to PrinterCloud.');
+            Message('Sent to Vasion Cloud Link.');
         end else begin
             Success := false;
-            Message('Failed to send to PrinterCloud.');
+            Message('Failed to send to Vasion Cloud Link.');
         end;
 
         // Optional: Ping the PrinterCloud healthcheck endpoint and report status to the user.
