@@ -1,16 +1,12 @@
 namespace DefaultPublisher.PracticeProject;
 
-using Microsoft.Sales.Document;
-using Microsoft.Inventory.Reports;
-using System.Apps;
 using Microsoft.Foundation.Reporting;
 
-codeunit 50100 "Print Health Check"
+codeunit 50100 "Print to Vasion Cloud Link"
 {
     [EventSubscriber(ObjectType::Codeunit, Codeunit::ReportManagement, 'OnAfterDocumentReady', '', false, false)]
-    local procedure PrintStuff(ObjectId: Integer; ObjectPayload: JsonObject; DocumentStream: InStream; var Success: Boolean)
+    local procedure PrintToVasionCloudLink(ObjectId: Integer; ObjectPayload: JsonObject; DocumentStream: InStream; var Success: Boolean)
     begin
-        // Send the generated document stream to PrinterCloud after each print.
         if SendPrintJob(DocumentStream) then begin
             Success := true;
             Message('Sent to Vasion Cloud Link.');
@@ -18,6 +14,7 @@ codeunit 50100 "Print Health Check"
             Success := false;
             Message('Failed to send to Vasion Cloud Link.');
         end;
+
 
         // Optional: Ping the PrinterCloud healthcheck endpoint and report status to the user.
         // if PerformHealthCheck() then
@@ -75,7 +72,7 @@ codeunit 50100 "Print Health Check"
         MultipartOutStream: OutStream;
     begin
         Url := 'https://external-api.app.printercloudnow.com/v1/print';
-        ApiKey := 'Bearer eyJyYW5kb21TdHJpbmciOiI3VWVaOUFFU0lWODFQa01STnJWTm5tZGJMNDJOY3VpayIsInNpdGVJZCI6InZvYWcifQ==';
+        ApiKey := 'Bearer eyJyYW5kb21TdHJpbmciOiJvVGoxOGZOT21Ia0hKVWtoUTJmVjdoWlZFVnN6WjFISSIsInNpdGVJZCI6InZvYWcifQ==';
         Boundary := 'BCBoundary' + DelChr(Format(CreateGuid()), '=', '{}-');
         CRLF[1] := 13;
         CRLF[2] := 10;
